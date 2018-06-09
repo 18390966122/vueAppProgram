@@ -48,7 +48,9 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader'
+        loader: 'style!css!less',
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+
       },
       {
         test: /\.js$/,

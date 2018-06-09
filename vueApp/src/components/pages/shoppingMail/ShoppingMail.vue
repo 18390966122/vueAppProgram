@@ -21,12 +21,19 @@
 </template>
 
 <script>
+import {HOME} from '@/assets/service/url/home.js'
 // vant是24列栅格布局
 export default {
+  data () {
+    return {}
+  },
+  created () {
+    console.log(HOME)
+  }
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     .home {
         .search-bar {
             height: 2.2rem;
