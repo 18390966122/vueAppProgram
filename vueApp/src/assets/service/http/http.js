@@ -1,7 +1,7 @@
 import {baseURL, errors} from '@/assets/service/config/config.js'
 import axios from 'axios'
 import qs from 'qs'
-import Vue from 'vue'
+import { Dialog } from 'vant'
 
 axios.interceptors.request.use(config => {
 //   store.commit('UPDATE_LOADING',true) //显示loading
@@ -14,7 +14,7 @@ axios.interceptors.response.use(response => {
 }, error => {
   return Promise.resolve(error.response)
 })
-function errorState (response) {
+async function errorState (response) {
   // store.commit('UPDATE_LOADING',false)  //隐藏loading
   console.log(response)
   // 如果http状态码正常，则直接返回数据
@@ -22,53 +22,48 @@ function errorState (response) {
     return response
     // 如果不需要除了data之外的数据，可以直接 return response.data
   } else if (response.status === 500) {
-    Vue.prototype.$msg.alert.show({
+    Dialog.alert({
       title: '提示',
-      content: errors.serverError
+      message: errors.serverError.text
+    }).then(() => {
+      // on close
     })
   } else if (response.status === 401) {
-    Vue.prototype.$msg.alert.show({
+    Dialog.alert({
       title: '提示',
-      content: errors.loginTimeout
+      message: errors.systemError.text
+    }).then(() => {
+      // on close
     })
   } else if (response.status > 500 || response.status === 400) {
-    Vue.prototype.$msg.alert.show({
+    Dialog.alert({
       title: '提示',
-      content: errors.systemError
+      message: errors.systemError.text
+    }).then(() => {
+      // on close
     })
   } else {
-    Vue.prototype.$msg.alert.show({
+    Dialog.alert({
       title: '提示',
-      content: errors.netError
+      message: errors.netError.text
+    }).then(() => {
+      // on close
     })
   }
 }
-function successState (res) {
+async function successState (res) {
 // store.commit('UPDATE_LOADING',false) //隐藏loading
 // 统一判断后端返回的错误码
   if (res.data.errCode === '000002') {
-    Vue.prototype.$msg.alert.show({
+    Dialog.alert({
       title: '提示',
-      content: res.data.errDesc || '网络异常',
-      onShow () {
-      },
-      onHide () {
-        console.log('确定')
-      }
-    })
-  } else if (res.data.errCode !== '000002' && res.data.errCode !== '000000') {
-    Vue.prototype.$msg.alert.show({
-      title: '提示',
-      content: res.data.errDesc || '网络异常',
-      onShow () {
-      },
-      onHide () {
-        console.log('确定')
-      }
+      message: errors.netError
+    }).then(() => {
+      // on close
     })
   }
 }
-const httpServer = (opts, data) => {
+const httpServer = async (opts, data) => {
   let Public = {}// 公共参数
   let httpDefaultOpts = {// http默认配置
     method: opts.method,
@@ -98,9 +93,9 @@ const httpServer = (opts, data) => {
         resolve(res)
       }
     ).catch(
-      (response) => {
-        errorState(response)
-        reject(response)
+      (err) => {
+        errorState(err)
+        reject(err)
       }
     )
   })
