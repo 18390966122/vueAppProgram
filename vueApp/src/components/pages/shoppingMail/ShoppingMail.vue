@@ -46,15 +46,18 @@
             </swiper>
           </div>
         </div>
+        <!-- 商品层 -->
+        <div><v-floor :floorData="indexData.floor1"></v-floor></div>
+        <div><v-floor :floorData="indexData.floor2"></v-floor></div>
+        <div><v-floor :floorData="indexData.floor3"></v-floor></div>
     </div>
 </template>
 
 <script>
 import {HOME} from '@/assets/service/url/home.js'
 import {swiper, swiperSlide} from 'vue-awesome-swiper'
+import VFloor from '@/components/component/FloorComponent'
 import 'swiper/dist/css/swiper.css'
-// import httpServer from '@/assets/service/http/http.js'
-// import axios from 'axios'
 // vant是24列栅格布局
 export default {
   data () {
@@ -62,6 +65,7 @@ export default {
       indexData: null,
       swiperOptions: {
         slidesPerView: 3,
+        loop: true,
         pagination: {
           el: '.swiper-pagination',
           clickable: true
@@ -73,6 +77,7 @@ export default {
   computed: {
   },
   components: {
+    VFloor,
     swiper,
     swiperSlide
   },
