@@ -3,13 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import {Button, Row, Col, Swipe, SwipeItem, Lazyload, Dialog} from 'vant'
+import {Button, Row, Col, Swipe, SwipeItem, Lazyload, Dialog, List} from 'vant'
 import httpServer from '@/assets/service/http/http.js'
 import '@/assets/css/base.css'
 Vue.prototype.$httpServer = httpServer
 Vue.config.productionTip = false
 
-Vue.use(Button).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload).use(Dialog)
+Vue.use(Button).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload).use(Dialog).use(List)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

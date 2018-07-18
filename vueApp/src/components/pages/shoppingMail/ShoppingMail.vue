@@ -35,11 +35,11 @@
           </div>
           <div class="recommand-body">
             <swiper :options="swiperOptions">
-              <swiper-slide v-for="(item, index) in indexData.recommend" :key='index'>
-                <div class="recommand-list" :id="item.goodsId">
-                  <img :src="item.image" alt="" width="80%">
-                  <div class="recommand-goodsName">{{item.goodsName}}{{item.goodsName}}</div>
-                  <div class="recommand-price">￥{{item.price}}(￥{{item.mallPrice}})</div>
+              <swiper-slide v-for="(rem, index) in indexData.recommend" :key='index'>
+                <div class="recommand-list" :id="rem.goodsId">
+                  <img :src="rem.image" alt="" width="80%">
+                  <div class="recommand-goodsName">{{rem.goodsName}}{{rem.goodsName}}</div>
+                  <div class="recommand-price">￥{{rem.price | moneyFilter}}(￥{{rem.mallPrice | moneyFilter}})</div>
                 </div>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
@@ -47,9 +47,17 @@
           </div>
         </div>
         <!-- 商品层 -->
-        <div><v-floor :floorData="indexData.floor1"></v-floor></div>
-        <div><v-floor :floorData="indexData.floor2"></v-floor></div>
-        <div><v-floor :floorData="indexData.floor3"></v-floor></div>
+        <div v-for="(floor, index) in floorArray" :key="index"><v-floor :floorData="indexData[floor]" :floorTitle="indexData.floorName[floor]"></v-floor></div>
+        <!-- 热销商品 -->
+        <div>
+          <van-list>
+            <van-row>
+              <van-col span="12" v-for="(value, index) in indexData.hotGoods" :key="index">
+                <v-hot-goods :singerHotGoodsData="value" :span="10"></v-hot-goods>
+              </van-col>
+            </van-row>
+          </van-list>
+        </div>
     </div>
 </template>
 
@@ -57,11 +65,16 @@
 import {HOME} from '@/assets/service/url/home.js'
 import {swiper, swiperSlide} from 'vue-awesome-swiper'
 import VFloor from '@/components/component/FloorComponent'
+import VHotGoods from '@/components/component/HotGoodsComponent'
+import {toMoney} from '@/assets/js/filter/moneyFilter.js'
 import 'swiper/dist/css/swiper.css'
 // vant是24列栅格布局
 export default {
   data () {
     return {
+      loading: true,
+      finished: true,
+      floorArray: ['floor1', 'floor2', 'floor3'],
       indexData: null,
       swiperOptions: {
         slidesPerView: 3,
@@ -79,7 +92,8 @@ export default {
   components: {
     VFloor,
     swiper,
-    swiperSlide
+    swiperSlide,
+    VHotGoods
   },
   created () {
     this.getCommodityList()
@@ -90,6 +104,11 @@ export default {
         console.log(res.data.data)
         this.indexData = res.data.data
       })
+    }
+  },
+  filters: {
+    moneyFilter (money) {
+      return toMoney(money)
     }
   }
 }
@@ -163,6 +182,7 @@ export default {
         padding: .2rem .2rem .2rem .6rem;
       }
       .recommand-body {
+        padding: 0 .3rem;
         border-bottom: 1px solid #eee;
         .recommand-list {
           height: 10rem;

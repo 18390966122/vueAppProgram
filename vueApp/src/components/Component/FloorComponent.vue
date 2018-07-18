@@ -1,6 +1,7 @@
 <!-- 这是一个首页商品楼层组件 -->
 <template>
   <div class="floor-area">
+    <div class="floor-title">{{floorTitle}}</div>
     <div class="floor_one">
       <div><img :src="floorData[0].image" :id="floorData[0].goodsId" alt="" width="100%"></div>
       <div>
@@ -16,16 +17,26 @@
 
 <script>
 export default {
-  props: ['floorData']
+  props: ['floorData', 'floorTitle']
 }
 </script>
 <style lang='less' scoped>
 .floor-area {
+  .floor-title {
+    height: 2rem;
+    font-size: 16px;
+    line-height: 2rem;
+    padding-left: .6rem;
+    text-align: center;
+    font-weight: 700;
+    background-color: #f2efef;
+  }
   .floor_one {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #eee;
     background-color: #fff;
+    border-top: 1px solid #eee;
     div {
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
