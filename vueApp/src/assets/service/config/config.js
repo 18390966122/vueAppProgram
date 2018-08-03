@@ -5,7 +5,8 @@ const errors = {
   serverError: { errorType: 4, text: '服务器错误，请联系管理员' }
 }
 
-const baseURL = ' https://www.easy-mock.com/mock/5b1be26d403771427cce08bb/demoApp'
+// const baseURL = 'https://www.easy-mock.com/mock/5b1be26d403771427cce08bb/demoApp'
+const baseURL = 'http://localhost:3000'
 
 export {
   errors,

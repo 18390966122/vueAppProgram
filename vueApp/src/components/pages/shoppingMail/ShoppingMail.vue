@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import {HOME} from '@/assets/service/url/home.js'
+import {home} from '@/assets/service/url/home.js'
 import {swiper, swiperSlide} from 'vue-awesome-swiper'
 import VFloor from '@/components/component/FloorComponent'
 import VHotGoods from '@/components/component/HotGoodsComponent'
@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     getCommodityList () {
-      this.$httpServer(HOME.INDEX).then((res) => {
+      this.$httpServer(home.INDEX).then((res) => {
         console.log(res.data.data)
         this.indexData = res.data.data
       })

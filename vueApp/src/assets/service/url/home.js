@@ -1,7 +1,8 @@
-const HOME = {
-  INDEX: {url: '/index', method: 'get'}
+const home = {
+  index: {url: '/index', method: 'GET'},
+  register: {url: '/user/register', method: 'POST'}
 }
 
 export {
-  HOME
+  home
 }
