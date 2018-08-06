@@ -1,13 +1,13 @@
 <!--  -->
 <template>
-  <div class="register-panel">
+  <div class="login-panel">
       <van-nav-bar
-        title="用户注册"
+        title="用户名"
         left-text="返回"
         left-arrow
         @click-left="onClickLeft()"
       />
-      <van-cell-group class="register-form">
+      <van-cell-group class="login-form">
         <van-field
           v-model="username"
           required
@@ -27,7 +27,7 @@
           :error-message="errorPassword"
         />
       </van-cell-group>
-      <van-button type="primary" class="register-button" @click="postRegister" :loading="openLoading">注册</van-button>
+      <van-button type="primary" class="login-button" @click="postlogin" :loading="openLoading">注册</van-button>
   </div>
 </template>
 
@@ -36,7 +36,7 @@ import {home} from '@/assets/service/url/home.js'
 import errorTips from '@/assets/js/validate/errorTips.js'
 import validate from '@/assets/js/validate/validate.js'
 export default {
-  name: 'Register',
+  name: 'login',
   data () {
     return {
       username: '',
@@ -50,13 +50,14 @@ export default {
     onClickLeft () {
       this.$router.go(-1)
     },
-    postRegister () {
-      this.checkForm() && this.register()
+    postlogin () {
+      this.checkForm() && this.login()
     },
-    register () {
+    login () {
       this.openLoading = true
-      this.$httpServer(home.register, {username: this.username, password: this.password}).then((res) => {
-        this.$router.push('/Home')
+      this.$httpServer(home.login, {username: this.username, password: this.password}).then((res) => {
+        // this.$router.push('/Home')
+        console.log(res)
         this.openLoading = false
       }).catch(() => {
         this.openLoading = false
@@ -83,11 +84,11 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-.register-panel {
-  .register-form {
+.login-panel {
+  .login-form {
     margin-top: 10px;
   }
-  .register-button {
+  .login-button {
     width: 100%;
     margin: 10px auto;
   }

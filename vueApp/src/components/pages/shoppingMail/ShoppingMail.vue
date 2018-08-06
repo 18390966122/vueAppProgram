@@ -96,11 +96,11 @@ export default {
     VHotGoods
   },
   created () {
-    this.getCommodityList()
+    // this.getCommodityList()
   },
   methods: {
     getCommodityList () {
-      this.$httpServer(home.INDEX).then((res) => {
+      this.$httpServer(home.index).then((res) => {
         console.log(res.data.data)
         this.indexData = res.data.data
       })
