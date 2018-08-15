@@ -56,7 +56,7 @@ export default {
     register () {
       this.openLoading = true
       this.$httpServer(home.register, {username: this.username, password: this.password}).then((res) => {
-        this.$router.push('/Home')
+        this.$router.push('/Login')
         this.openLoading = false
       }).catch(() => {
         this.openLoading = false

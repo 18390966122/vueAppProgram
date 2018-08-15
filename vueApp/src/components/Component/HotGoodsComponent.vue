@@ -1,9 +1,9 @@
 <template>
   <div class="hot-goods">
-        <div>
-            <img :src="singerHotGoodsData.image" alt="" v-lazy="singerHotGoodsData.image">
-            <div class="goods-text">{{singerHotGoodsData.name}}</div>
-            <div class="goods-text">￥{{singerHotGoodsData.price | moneyFilter}}(￥{{singerHotGoodsData.mallPrice | moneyFilter}})</div>
+        <div @click="goToGoodsInfo">
+            <img :src="image" alt="" v-lazy="image">
+            <div class="goods-text">{{name}}</div>
+            <div class="goods-text">￥{{price | moneyFilter}}(￥{{mallPrice | moneyFilter}})</div>
         </div>
   </div>
 </template>
@@ -13,7 +13,7 @@ import { toMoney } from '@/assets/js/filter/moneyFilter.js'
 import {lazyComponent} from 'vue-lazyload'
 export default {
   name: 'hootGoods',
-  props: ['singerHotGoodsData'],
+  props: ['name', 'image', 'price', 'mallPrice', 'id'],
   filters: {
     moneyFilter (money) {
       return toMoney(money)
@@ -21,6 +21,11 @@ export default {
   },
   components: {
     lazyComponent
+  },
+  methods: {
+    goToGoodsInfo () {
+      this.$router.push({name: 'goodsInfo', query: {goodsId: this.id}})
+    }
   }
 }
 </script>
@@ -30,7 +35,7 @@ export default {
   text-align: center;
   height: 212px;
   img {
-    width: 100%;
+    width: 86%;
   }
   .goods-text {
     padding: 0 .3rem;

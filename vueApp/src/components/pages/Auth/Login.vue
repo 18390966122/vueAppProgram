@@ -27,7 +27,11 @@
           :error-message="errorPassword"
         />
       </van-cell-group>
-      <van-button type="primary" class="login-button" @click="postlogin" :loading="openLoading">注册</van-button>
+      <van-button type="primary" class="login-button" @click="postlogin" :loading="openLoading">登录</van-button>
+      <br/>
+      <br/>
+      <br/>
+      <van-button type="primary" class="login-button" @click="toRegister" :loading="openLoading">免费注册</van-button>
   </div>
 </template>
 
@@ -47,6 +51,9 @@ export default {
     }
   },
   methods: {
+    toRegister () {
+      this.$router.push('/Register')
+    },
     onClickLeft () {
       this.$router.go(-1)
     },
@@ -56,8 +63,9 @@ export default {
     login () {
       this.openLoading = true
       this.$httpServer(home.login, {username: this.username, password: this.password}).then((res) => {
-        // this.$router.push('/Home')
-        console.log(res)
+        this.$router.push('/home')
+        localStorage.setItem('userInfo', this.username)
+        console.log()
         this.openLoading = false
       }).catch(() => {
         this.openLoading = false

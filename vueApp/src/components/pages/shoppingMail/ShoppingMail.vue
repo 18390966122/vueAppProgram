@@ -1,5 +1,6 @@
 <template>
-    <div class="home" v-if='indexData'>
+<div>
+  <div class="home" v-if='indexData'>
         <div class="search-bar">
             <van-row>
                 <van-col span="3"><img src="../../../assets/images/home/location.png" alt="定位logo" class="location-img"></van-col>
@@ -53,12 +54,23 @@
           <van-list>
             <van-row>
               <van-col span="12" v-for="(value, index) in indexData.hotGoods" :key="index">
-                <v-hot-goods :singerHotGoodsData="value" :span="10"></v-hot-goods>
+                <v-hot-goods :id="value.goodsId" :name="value.name" :span="10" :price="value.price" :mallPrice="value.mallPrice" :image="value.image"></v-hot-goods>
               </van-col>
             </van-row>
           </van-list>
         </div>
     </div>
+    <div>
+      <van-list>
+        <van-row>
+          <van-col span="12" v-for="(value, index) in goods" :key="index">
+            <v-hot-goods :id="value.GOODS_ID" :name="value.NAME" :span="10" :price="value.PRESENT_PRICE" :mallPrice="value.ORI_PRICE" :image="value.IMAGE1"></v-hot-goods>
+          </van-col>
+        </van-row>
+      </van-list>
+    </div>
+    <!-- <van-button type="primary" class="quit-button" @click="quit">退出</van-button> -->
+</div>
 </template>
 
 <script>
@@ -72,8 +84,7 @@ import 'swiper/dist/css/swiper.css'
 export default {
   data () {
     return {
-      loading: true,
-      finished: true,
+      goods: null,
       floorArray: ['floor1', 'floor2', 'floor3'],
       indexData: null,
       swiperOptions: {
@@ -84,7 +95,8 @@ export default {
           clickable: true
         },
         recommandList: []
-      }
+      },
+      id: '2c9f6c946016ea9b016016f79c8e0000'
     }
   },
   computed: {
@@ -96,13 +108,23 @@ export default {
     VHotGoods
   },
   created () {
-    // this.getCommodityList()
+    this.getCommodityList()
+    this.getCategory()
   },
   methods: {
+    quit () {
+      localStorage.removeItem('userInfo')
+      this.$router.push('/Login')
+    },
     getCommodityList () {
       this.$httpServer(home.index).then((res) => {
-        console.log(res.data.data)
-        this.indexData = res.data.data
+        this.indexData = res.data.message.data
+        console.log(this.indexData)
+      })
+    },
+    getCategory () {
+      this.$httpServer(home.category).then((res) => {
+        this.goods = res.data.data
       })
     }
   },
