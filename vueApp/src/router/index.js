@@ -12,7 +12,7 @@ let router = new Router({
       }
     },
     {
-      path: '/home',
+      path: '/',
       name: 'ShoppingMail',
       component: (resolve) => {
         require(['@/components/pages/ShoppingMail/ShoppingMail'], resolve)
@@ -22,10 +22,20 @@ let router = new Router({
       }
     },
     {
-      path: '/goodsInfo',
+      path: '/GoodsInfo',
       name: 'goodsInfo',
       component: (resolve) => {
         require(['@/components/pages/ShoppingMail/goodsInfo'], resolve)
+      },
+      meta: {
+        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
+      }
+    },
+    {
+      path: '/Category',
+      name: 'Category',
+      component: (resolve) => {
+        require(['@/components/pages/ShoppingMail/Category'], resolve)
       },
       meta: {
         requireAuth: true // 配置此条，进入页面前判断是否需要登陆
@@ -41,17 +51,13 @@ let router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) {
-    if (localStorage.getItem('userInfo')) {
-      next()
-    } else {
-      next({
-        path: '/Login',
-        query: {redirect: to.fullPath}
-      })
-    }
-  } else {
+  if (localStorage.getItem('userInfo')) {
     next()
+  } else {
+    next({
+      path: '/Login',
+      query: {redirect: to.fullPath}
+    })
   }
 })
 export default router

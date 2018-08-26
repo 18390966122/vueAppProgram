@@ -63,7 +63,7 @@ export default {
     login () {
       this.openLoading = true
       this.$httpServer(home.login, {username: this.username, password: this.password}).then((res) => {
-        this.$router.push('/home')
+        this.$router.push('/')
         localStorage.setItem('userInfo', this.username)
         console.log()
         this.openLoading = false

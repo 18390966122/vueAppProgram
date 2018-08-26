@@ -5,7 +5,13 @@ const home = {
   goodsInfo: {url: '/goods/goodsInfo', method: 'POST'},
   category: {url: '/goods/category', method: 'GET'}
 }
-
+const category = {
+  getCategory: {url: '/goods/getCategory', method: 'GET'},
+  getCategorySub: {url: '/goods/getCategorySub', method: 'GET'},
+  getCategorySubList: {url: '/goods/getCategorySubList', method: 'POST'},
+  getCategorySubGoodsById: {url: '/goods/getCategorySubGoodsById', method: 'POST'}
+}
 export {
-  home
+  home,
+  category
 }

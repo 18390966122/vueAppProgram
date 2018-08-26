@@ -13,15 +13,15 @@
         <!-- swipe area -->
         <div class="swipe-area">
             <van-swipe :autoplay="3000" class="swipe-box">
-                <van-swipe-item><img src="../../../assets/images/home/swipe-1.jpg" alt=""></van-swipe-item>
-                <van-swipe-item><img src="../../../assets/images/home/swipe-2.jpg" alt=""></van-swipe-item>
-                <van-swipe-item><img src="../../../assets/images/home/swipe-3.jpg" alt=""></van-swipe-item>
+                <van-swipe-item><img src="../../../assets/images/home/swipe-1.jpg" alt="" @click="goToCategory"></van-swipe-item>
+                <van-swipe-item><img src="../../../assets/images/home/swipe-2.jpg" alt="" @click="goToCategory"></van-swipe-item>
+                <van-swipe-item><img src="../../../assets/images/home/swipe-3.jpg" alt="" @click="goToCategory"></van-swipe-item>
             </van-swipe>
         </div>
         <!-- type - bar -->
         <div class="type-bar">
           <ul>
-            <li class="typeBar-lis" v-for="(item, index) in  indexData.category" :key="index">
+            <li class="typeBar-lis" v-for="(item, index) in  indexData.category" :key="index" @click="goToCategory">
               <img :src="item.image" alt="">
             </li>
           </ul>
@@ -37,7 +37,7 @@
           <div class="recommand-body">
             <swiper :options="swiperOptions">
               <swiper-slide v-for="(rem, index) in indexData.recommend" :key='index'>
-                <div class="recommand-list" :id="rem.goodsId">
+                <div class="recommand-list" :id="rem.goodsId" @click="goToCategory">
                   <img :src="rem.image" alt="" width="80%">
                   <div class="recommand-goodsName">{{rem.goodsName}}{{rem.goodsName}}</div>
                   <div class="recommand-price">￥{{rem.price | moneyFilter}}(￥{{rem.mallPrice | moneyFilter}})</div>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <!-- 商品层 -->
-        <div v-for="(floor, index) in floorArray" :key="index"><v-floor :floorData="indexData[floor]" :floorTitle="indexData.floorName[floor]"></v-floor></div>
+        <div v-for="(floor, index) in floorArray" :key="index"><v-floor :floorData="indexData[floor]" :floorTitle="indexData.floorName[floor]" @click="goToCategory"></v-floor></div>
         <!-- 热销商品 -->
         <div>
           <van-list>
@@ -109,9 +109,11 @@ export default {
   },
   created () {
     this.getCommodityList()
-    this.getCategory()
   },
   methods: {
+    goToCategory () {
+      this.$router.push('/Category')
+    },
     quit () {
       localStorage.removeItem('userInfo')
       this.$router.push('/Login')
@@ -120,11 +122,6 @@ export default {
       this.$httpServer(home.index).then((res) => {
         this.indexData = res.data.message.data
         console.log(this.indexData)
-      })
-    },
-    getCategory () {
-      this.$httpServer(home.category).then((res) => {
-        this.goods = res.data.data
       })
     }
   },
