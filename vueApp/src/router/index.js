@@ -12,41 +12,53 @@ let router = new Router({
       }
     },
     {
-      path: '/',
-      name: 'ShoppingMail',
-      component: (resolve) => {
-        require(['@/components/pages/ShoppingMail/ShoppingMail'], resolve)
-      },
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
-    },
-    {
-      path: '/GoodsInfo',
-      name: 'goodsInfo',
-      component: (resolve) => {
-        require(['@/components/pages/ShoppingMail/goodsInfo'], resolve)
-      },
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
-    },
-    {
-      path: '/Category',
-      name: 'Category',
-      component: (resolve) => {
-        require(['@/components/pages/ShoppingMail/Category'], resolve)
-      },
-      meta: {
-        requireAuth: true // 配置此条，进入页面前判断是否需要登陆
-      }
-    },
-    {
       path: '/Register',
       name: 'Register',
       component: (resolve) => {
         require(['@/components/pages/Auth/Register'], resolve)
       }
+    },
+    {
+      path: '/',
+      name: 'Main',
+      component: (resolve) => {
+        require(['@/components/pages/ShoppingMail/Main'], resolve)
+      },
+      children: [{
+        path: '/ShoppingMail',
+        name: 'ShoppingMail',
+        component: (resolve) => {
+          require(['@/components/pages/ShoppingMail/ShoppingMail'], resolve)
+        }
+      },
+      {
+        path: '/GoodsInfo',
+        name: 'goodsInfo',
+        component: (resolve) => {
+          require(['@/components/pages/ShoppingMail/goodsInfo'], resolve)
+        }
+      },
+      {
+        path: '/Category',
+        name: 'Category',
+        component: (resolve) => {
+          require(['@/components/pages/ShoppingMail/Category'], resolve)
+        }
+      },
+      {
+        path: '/Cart',
+        name: 'Cart',
+        component: (resolve) => {
+          require(['@/components/pages/ShoppingMail/Cart'], resolve)
+        }
+      },
+      {
+        path: '/PersonCenter',
+        name: 'PersonCenter',
+        component: (resolve) => {
+          require(['@/components/pages/ShoppingMail/PersonCenter'], resolve)
+        }
+      }]
     }
   ]
 })

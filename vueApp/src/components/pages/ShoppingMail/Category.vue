@@ -23,7 +23,7 @@
                 :finished="finished"
                 @load="onLoad"
                 class="good-list"
-                :style="{height: bodyHeight - 90 + 'px'}">
+                :style="{height: bodyHeight - 140 + 'px'}">
                 <div v-for="(item, index) in categoryList" :key="index" class="list-content" @click="goToGoodsInfo(item)">
                   <van-row>
                     <van-col span="8">

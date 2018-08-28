@@ -60,7 +60,7 @@
           </van-list>
         </div>
     </div>
-    <div>
+    <div style="padding-bottom: 50px;">
       <van-list>
         <van-row>
           <van-col span="12" v-for="(value, index) in goods" :key="index">
@@ -69,7 +69,6 @@
         </van-row>
       </van-list>
     </div>
-    <!-- <van-button type="primary" class="quit-button" @click="quit">退出</van-button> -->
 </div>
 </template>
 
@@ -113,10 +112,6 @@ export default {
   methods: {
     goToCategory () {
       this.$router.push('/Category')
-    },
-    quit () {
-      localStorage.removeItem('userInfo')
-      this.$router.push('/Login')
     },
     getCommodityList () {
       this.$httpServer(home.index).then((res) => {

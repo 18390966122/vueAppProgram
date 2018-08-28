@@ -23,7 +23,7 @@
       </van-tabs>
       <div class="footer">
         <div class="add">
-          <van-button type="primary" style="width: 98%">加入购物车</van-button>
+          <van-button type="primary" style="width: 98%" @click='add'>加入购物车</van-button>
         </div>
         <div class="buy">
           <van-button type="danger" style="width: 98%">直接购买</van-button>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant'
 import {home} from '@/assets/service/url/home.js'
 import {toMoney} from '@/assets/js/filter/moneyFilter.js'
 export default {
@@ -62,6 +63,26 @@ export default {
         this.goodsInfo = res.data.data
         console.log(this.goodsInfo)
       })
+    },
+    add () {
+      let cartInfo = localStorage.cartInfo ? JSON.parse(localStorage.cartInfo) : []
+      let isHave = false
+      let i = 0
+      cartInfo.forEach((item, index) => {
+        if (item.GOODS_ID === this.goodsInfo.GOODS_ID) {
+          isHave = true
+          i = index
+        }
+      })
+      if (isHave) {
+        cartInfo[i].num += 1
+        Toast('添加成功')
+      } else {
+        this.goodsInfo.num = 1
+        cartInfo.push(this.goodsInfo)
+        Toast('添加成功')
+      }
+      localStorage.cartInfo = JSON.stringify(cartInfo)
     }
   }
 }
@@ -98,6 +119,7 @@ export default {
       bottom: 0px;
       width: 100%;
       background-color: #fff;
+      z-index: 1;
       .add {
         float: left;
         width: 50%;
