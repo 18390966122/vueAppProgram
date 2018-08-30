@@ -27,13 +27,15 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   name: 'Cart',
   data () {
     return {
       cartInfo: [],
       empty: false,
-      h: 0
+      h: 0,
+      sum: 0
     }
   },
   mounted () {
@@ -43,11 +45,22 @@ export default {
     this.getCartInfo()
   },
   methods: {
+    ...mapMutations(['SET_CAR_SUM']),
+    getSum (cartInfo) {
+      this.sum = 0
+      this.cartInfo.forEach(element => {
+        this.sum += element.num
+      })
+    },
     reduce (i) {
       this.cartInfo[i].num = this.cartInfo[i].num > 2 ? this.cartInfo[i].num -= 1 : 1
+      this.getSum()
+      this.SET_CAR_SUM(this.sum)
     },
     add (i) {
       this.cartInfo[i].num += 1
+      this.getSum()
+      this.SET_CAR_SUM(this.sum)
     },
     getCartInfo () {
       this.cartInfo = localStorage.cartInfo ? JSON.parse(localStorage.cartInfo) : []

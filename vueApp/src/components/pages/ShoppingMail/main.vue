@@ -8,34 +8,35 @@
     <van-tabbar v-model="active" @change="changeTabbar(active)">
       <van-tabbar-item icon="home">首页</van-tabbar-item>
       <van-tabbar-item icon="chat">商品列表</van-tabbar-item>
-      <van-tabbar-item icon="cart">购物车</van-tabbar-item>
+      <van-tabbar-item icon="cart" :info="carSum">购物车</van-tabbar-item>
       <van-tabbar-item icon="setting">会员中心</van-tabbar-item>
   </van-tabbar>
   </div>
 </template>
 
 <script>
+import {mapGetters, mapMutations} from 'vuex'
 export default {
   name: 'Main',
   data () {
     return {
       active: 0,
-      cartSum: 0,
       nowPath: ''
     }
   },
   created () {
-    this.getCarNum()
+    let sum = localStorage.cartInfo ? JSON.parse(localStorage.cartInfo).length : 0
+    this.changeTabbar(0)
+    this.SET_CAR_SUM(sum)
   },
   computed: {
+    ...mapGetters(['carSum'])
   },
   updated () {
     this.changeTabBarActive()
   },
   methods: {
-    getCarNum () {
-      this.carSum = localStorage.cartInfo ? JSON.parse(localStorage.cartInfo).length : 0
-    },
+    ...mapMutations(['SET_CAR_SUM']),
     changeTabbar (active) {
       switch (active) {
         case 0:
@@ -53,7 +54,6 @@ export default {
       }
     },
     changeTabBarActive () {
-      this.getCarNum()
       this.nowPath = this.$route.path
       if (this.nowPath === '/Cart') {
         this.active = 2

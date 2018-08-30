@@ -3,7 +3,7 @@
   <div class="home" v-if='indexData'>
         <div class="search-bar">
             <van-row>
-                <van-col span="3"><img src="../../../assets/images/home/location.png" alt="定位logo" class="location-img"></van-col>
+                <van-col span="3"><img src="../../../assets/images/home/location.png" alt="定位logo" class="location-img" @click="show = true"></van-col>
                 <van-col span="16">
                     <input type="text" class="search-input" placeholder="请输入搜索内容">
                 </van-col>
@@ -13,15 +13,15 @@
         <!-- swipe area -->
         <div class="swipe-area">
             <van-swipe :autoplay="3000" class="swipe-box">
-                <van-swipe-item><img src="../../../assets/images/home/swipe-1.jpg" alt="" @click="goToCategory"></van-swipe-item>
-                <van-swipe-item><img src="../../../assets/images/home/swipe-2.jpg" alt="" @click="goToCategory"></van-swipe-item>
-                <van-swipe-item><img src="../../../assets/images/home/swipe-3.jpg" alt="" @click="goToCategory"></van-swipe-item>
+                <van-swipe-item><img src="../../../assets/images/home/swipe-1.jpg" alt=""></van-swipe-item>
+                <van-swipe-item><img src="../../../assets/images/home/swipe-2.jpg" alt=""></van-swipe-item>
+                <van-swipe-item><img src="../../../assets/images/home/swipe-3.jpg" alt=""></van-swipe-item>
             </van-swipe>
         </div>
         <!-- type - bar -->
         <div class="type-bar">
           <ul>
-            <li class="typeBar-lis" v-for="(item, index) in  indexData.category" :key="index" @click="goToCategory">
+            <li class="typeBar-lis" v-for="(item, index) in  indexData.category" :key="index">
               <img :src="item.image" alt="">
             </li>
           </ul>
@@ -69,6 +69,9 @@
         </van-row>
       </van-list>
     </div>
+  <van-dialog v-model="show" :showConfirmButton='false'>
+    <van-area :area-list="areaList" :columns-num="3" @confirm="show = false" @cancel="show = false"/>
+  </van-dialog>
 </div>
 </template>
 
@@ -83,6 +86,7 @@ import 'swiper/dist/css/swiper.css'
 export default {
   data () {
     return {
+      show: false,
       goods: null,
       floorArray: ['floor1', 'floor2', 'floor3'],
       indexData: null,
@@ -95,7 +99,31 @@ export default {
         },
         recommandList: []
       },
-      id: '2c9f6c946016ea9b016016f79c8e0000'
+      id: '2c9f6c946016ea9b016016f79c8e0000',
+      areaList: {
+        province_list: {
+          110000: '北京市',
+          120000: '天津市'
+        },
+        city_list: {
+          110100: '北京市',
+          110200: '县',
+          120100: '天津市',
+          120200: '县'
+        },
+        county_list: {
+          110101: '东城区',
+          110102: '西城区',
+          110105: '朝阳区',
+          110106: '丰台区',
+          120101: '和平区',
+          120102: '河东区',
+          120103: '河西区',
+          120104: '南开区',
+          120105: '河北区'
+          // ....
+        }
+      }
     }
   },
   computed: {
